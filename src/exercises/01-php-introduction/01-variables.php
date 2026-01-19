@@ -27,6 +27,13 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $fn = "Luke";
+        $ln = "Murphy";
+        $age = "19";
+        $city = "Dublin";
+        echo "My name is $fn $ln, I am $age years old and I live in $city."
+
+
         ?>
     </div>
 
