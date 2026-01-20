@@ -67,28 +67,31 @@
             echo "Its a weekend". "<br>";
             break;
         }
-        if($day == 1){
+       switch ($day) {
+            case 1:
             echo "Its Monday";
-        }
-        elseif($day == 2){
+            break;
+            case 2:
             echo "Its Tuesday";
-        }
-        elseif($day == 3){
-            echo "Its Wednsday";
-        }
-        elseif($day == 4){
+            break;
+            case 3:
+            echo "Its Wednesday";
+            break;
+            case 4:
             echo "Its Thursday";
-        }
-        elseif($day == 5){
+            break;
+            case 5:
             echo "Its Friday";
-        }
-        elseif($day == 6){
+            break;
+            case 6:
             echo "Its Saturday";
-        }
-        elseif($day == 7){
+            break;
+            case 7:
             echo "Its Sunday";
+            break;
+            default:
+            echo "Invalid day";
         }
-
         ?>
     </div>
 
