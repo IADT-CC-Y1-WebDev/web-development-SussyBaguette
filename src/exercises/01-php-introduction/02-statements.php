@@ -107,6 +107,13 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $number = rand(1, 10);
+
+        for ($i = 1; $i <= 10; $i++) {
+            $result = $number * $i;
+            echo "$number × $i = $result<br>";
+        }
+
         ?>
     </div>
 
@@ -122,6 +129,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        
+        $count = 10;
+
+        while ($count >= 0) {
+            if ($count == 0) {
+                echo "Blast off!";
+            } else {
+                echo $count . "<br>";
+            }
+            $count--;
+        }
+
+
         ?>
     </div>
 
