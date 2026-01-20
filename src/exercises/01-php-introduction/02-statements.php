@@ -57,6 +57,38 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $day = rand(1, 7);
+        echo "It is day $day in the week". "<br>";
+        switch(true){
+            case($day <= 5):
+            echo "Its a weekday". "<br>";
+            break;
+            case($day <= 7):
+            echo "Its a weekend". "<br>";
+            break;
+        }
+        if($day == 1){
+            echo "Its Monday";
+        }
+        elseif($day == 2){
+            echo "Its Tuesday";
+        }
+        elseif($day == 3){
+            echo "Its Wednsday";
+        }
+        elseif($day == 4){
+            echo "Its Thursday";
+        }
+        elseif($day == 5){
+            echo "Its Friday";
+        }
+        elseif($day == 6){
+            echo "Its Saturday";
+        }
+        elseif($day == 7){
+            echo "Its Sunday";
+        }
+
         ?>
     </div>
 
