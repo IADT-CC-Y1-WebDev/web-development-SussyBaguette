@@ -75,13 +75,14 @@
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
+        // TODO: Write your solution here
         $isStudent = true;
         $hasDiscount = false;
         $isPremiumMember = false;
 
-        echo "is Student?: " . ($isLoggedIn ? "Yes" : "No") . "<br>";
-        echo "Deserves discount?: " . ($isAdmin ? "Yes" : "No");
-        echo "is a premium member?: " . ($isAdmin ? "Yes" : "No");
+        echo "is Student?: " . ($isStudent ? "Yes" : "No") . "<br>";
+        echo "Deserves discount?: " . ($hasDiscount ? "Yes" : "No"). "<br>";
+        echo "is a premium member?: " . ($isPremiumMember ? "Yes" : "No");
         ?>
 
     </div>
