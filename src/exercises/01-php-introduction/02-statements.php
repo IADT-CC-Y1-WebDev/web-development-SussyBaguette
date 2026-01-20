@@ -27,6 +27,20 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $age = rand(0, 100);
+        echo "You are $age years old". "<br>";
+        if ($age <= 12){
+            echo "You are age group: Child";
+        }
+        elseif ($age <= 19){
+            echo "You are age group: Teenager";
+        }
+        elseif ($age <= 64){
+            echo "You are age group: Adult";
+        }
+        else{
+            echo "You are age group: Senior";
+        }
         ?>
     </div>
 
