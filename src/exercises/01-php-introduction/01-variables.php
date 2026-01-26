@@ -51,6 +51,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $p1 = 10;
+        $p2 = 20;
+        $p3 = 30;
+
+        $q1 = 1;
+        $q2 = 2;
+        $q3 = 3;
+
+        $finalPrice = ($p1*$q1)+($p2*$q2)+($p3*$q3);
+        echo $finalPrice;
         ?>
     </div>
 
@@ -66,7 +76,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $isStudent = true;
+        $hasDiscount = false;
+        $isPremiumMember = false;
+
+        echo "is Student?: " . ($isStudent ? "Yes" : "No") . "<br>";
+        echo "Deserves discount?: " . ($hasDiscount ? "Yes" : "No"). "<br>";
+        echo "is a premium member?: " . ($isPremiumMember ? "Yes" : "No");
         ?>
+
     </div>
 
 </body>

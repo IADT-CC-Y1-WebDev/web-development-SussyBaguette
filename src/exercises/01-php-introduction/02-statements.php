@@ -27,6 +27,20 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $age = rand(0, 100);
+        echo "You are $age years old". "<br>";
+        if ($age <= 12){
+            echo "You are age group: Child";
+        }
+        elseif ($age <= 19){
+            echo "You are age group: Teenager";
+        }
+        elseif ($age <= 64){
+            echo "You are age group: Adult";
+        }
+        else{
+            echo "You are age group: Senior";
+        }
         ?>
     </div>
 
@@ -43,6 +57,41 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $day = rand(1, 7);
+        echo "It is day $day in the week". "<br>";
+        switch(true){
+            case($day <= 5):
+            echo "Its a weekday". "<br>";
+            break;
+            case($day <= 7):
+            echo "Its a weekend". "<br>";
+            break;
+        }
+       switch ($day) {
+            case 1:
+            echo "Its Monday";
+            break;
+            case 2:
+            echo "Its Tuesday";
+            break;
+            case 3:
+            echo "Its Wednesday";
+            break;
+            case 4:
+            echo "Its Thursday";
+            break;
+            case 5:
+            echo "Its Friday";
+            break;
+            case 6:
+            echo "Its Saturday";
+            break;
+            case 7:
+            echo "Its Sunday";
+            break;
+            default:
+            echo "Invalid day";
+        }
         ?>
     </div>
 
@@ -58,6 +107,13 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $number = rand(1, 10);
+
+        for ($i = 1; $i <= 10; $i++) {
+            $result = $number * $i;
+            echo "$number × $i = $result<br>";
+        }
+
         ?>
     </div>
 
@@ -73,6 +129,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        
+        $count = 10;
+
+        while ($count >= 0) {
+            if ($count == 0) {
+                echo "Blast off!";
+            } else {
+                echo $count . "<br>";
+            }
+            $count--;
+        }
+
+
         ?>
     </div>
 
