@@ -21,12 +21,19 @@
         Create an indexed array with 5 of your favorite movies. Use a for 
         loop to display each movie with its position (e.g., "Movie 1: 
         The Matrix").
+
+        
     </p>
 
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $movies = array("Saw1", "Saw2", "Saw3", "Saw4", "Saw5");
+
+        for ($i = 0; $i < count($movies); $i++) {
+            echo "<li>Movie " . ($i + 1) . ": " . $movies[$i] . "</li>";
+        }
         ?>
     </div>
 
@@ -42,6 +49,8 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $student = array("name"=>"Luke Murphy", "studentId"=>"00255391", "course"=>"Creative Computing", "grade"=>"A+");
+            var_dump($student);
         ?>
     </div>
 
