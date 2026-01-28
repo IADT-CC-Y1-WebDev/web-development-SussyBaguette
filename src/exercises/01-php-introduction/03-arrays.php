@@ -67,6 +67,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $world = array("ireland"=>"dublin", "germany"=>"berlin", "netherlands"=>"amsterdam", "united kingdom"=>"london", "hungary"=>"budapest");
+
+            foreach ($world as $key => $value) {
+            echo "The capital of $key : is $value <br>";
+            }
+            
         ?>
     </div>
 
@@ -84,6 +90,28 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $products = [
+            "main" => [
+                "fish" => "20 euros",
+                "steak" => "16 euros",
+                "burger" => "15 euros",
+            ],
+            "starter" => [
+                "wings" => "9 euros",
+                "soup" => "4 euros",
+                "bread" => "2 euros",
+            ],
+        ];
+        foreach ($products as $category => $items) {
+        echo "<h3>$category</h3>";
+        echo "<ul>";
+        foreach ($items as $item => $price) {
+            echo "<li>$item - $price</li>";
+        }
+        echo "</ul>";
+    }
+        
+
         ?>
     </div>
 
