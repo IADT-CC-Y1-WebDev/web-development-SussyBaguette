@@ -25,6 +25,18 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function celsiusToFahrenheit($celsius) {
+            return($celsius * 9 / 5) + 32;
+        }
+            
+        
+        $testValues = [0, 10, 20, 30, 100];
+
+        foreach ($testValues as $celsius) {
+            $fahrenheit = celsiusToFahrenheit($celsius);
+            echo $celsius . "C = " . $fahrenheit . "F<br>";
+        }
+            
         ?>
     </div>
 
