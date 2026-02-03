@@ -57,6 +57,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function visitCounter() {
+            static $count = 0;
+
+            $count++;
+
+            echo "Visit count: $count <br>";
+        }
+
+        visitCounter();
+        visitCounter();
+        visitCounter();
+        visitCounter();
+        visitCounter();
         ?>
     </div>
 
