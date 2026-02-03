@@ -78,6 +78,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+           function checkEvenOdd($number) {
+            return ($number % 2 === 0) ? "Even" : "Odd";
+        }
+
+        $number = rand(1, 2);
+        echo checkEvenOdd($number);
         ?>
     </div>
 
