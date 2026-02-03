@@ -100,6 +100,23 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function getArrayStats(array $numbers): array {
+            $min = min($numbers);
+            $max = max($numbers);
+            $avg = array_sum($numbers) / count($numbers);
+
+            return [$min, $max, $avg];
+        }
+
+       
+        $numbers = [10, 5, 8, 14, 3];
+
+        
+        [$min, $max, $average] = getArrayStats($numbers);
+
+        echo "Minimum: $min\n";
+        echo "Maximum: $max\n";
+        echo "Average: $average\n";
         ?>
     </div>
 
