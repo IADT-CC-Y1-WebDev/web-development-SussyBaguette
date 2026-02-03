@@ -74,6 +74,31 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+
+        $errors = [];
+
+        if (isset($_GET['product']) && !empty(trim($_GET['product']))) {
+            $product = htmlspecialchars($_GET['product']);
+        } else {
+            $errors[] = "Error: 'product' parameter is missing.";
+        }
+
+        if (isset($_GET['quantity']) && !empty(trim($_GET['quantity']))) {
+            $quantity = htmlspecialchars($_GET['quantity']);
+        } else {
+            $errors[] = "Error: 'quantity' parameter is missing.";
+        }
+
+        if (empty($errors)) {
+            $plural = ($quantity != 1) ? 's' : '';
+            echo "You ordered $quantity $product$plural.";
+        } else {
+            foreach ($errors as $error) {
+                echo $error . "<br>";
+            }
+        }
+
+
         ?>
     </div>
 
