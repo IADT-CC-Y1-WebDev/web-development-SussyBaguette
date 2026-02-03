@@ -53,6 +53,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function calculateRectangleArea($width, $height = null) {
+        if ($height === null) {
+          
+            $height = $width;
+        }
+        return $width * $height;
+        }
+        
+        echo calculateRectangleArea(6, 10);
         ?>
     </div>
 
