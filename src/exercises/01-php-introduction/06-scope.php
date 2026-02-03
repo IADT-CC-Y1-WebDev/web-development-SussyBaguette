@@ -87,6 +87,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $message = "Global";
+
+        function testScope() {
+            $message = "Local";
+            echo "Inside function: $message <br>";
+        }
+
+        testScope();
+
+        echo "Outside function: $message <br>";
         ?>
     </div>
 
