@@ -28,6 +28,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $totalPoints = 0;
+
+        function addPoints($points) {
+            global $totalPoints;
+            $totalPoints += $points;
+            echo "Total points: $totalPoints <br>";
+        
+
+        $totalPoints += $points;
+        }
+        addPoints(10);
+        addPoints(20);
+        addPoints(5);
         ?>
     </div>
 
