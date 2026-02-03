@@ -27,6 +27,14 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        echo "<h2>Server Information</h2>";
+        echo "<ul>";
+        echo "<li><strong>PHP Self:</strong> " . htmlspecialchars($_SERVER['PHP_SELF']) . "</li>";
+        echo "<li><strong>Request Method:</strong> " . htmlspecialchars($_SERVER['REQUEST_METHOD']) . "</li>";
+        echo "<li><strong>HTTP Host:</strong> " . htmlspecialchars($_SERVER['HTTP_HOST']) . "</li>";
+        echo "<li><strong>User Agent:</strong> " . htmlspecialchars($_SERVER['HTTP_USER_AGENT']) . "</li>";
+        echo "</ul>";
+
         ?>
     </div>
 
@@ -43,6 +51,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        if (isset($_GET['name']) && !empty(trim($_GET['name']))) {
+            $name = htmlspecialchars($_GET['name']); 
+            echo "Hello, $name!";
+        } else {
+            echo "Hello, Guest!";
+        }
         ?>
     </div>
 
