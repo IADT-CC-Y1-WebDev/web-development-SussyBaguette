@@ -21,6 +21,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
 $cart = ShoppingCart::getInstance();
+
 // =============================================================================
 
 // =============================================================================
@@ -31,14 +32,10 @@ $cart = ShoppingCart::getInstance();
 // 3. Redirect back to cart.php
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
-if(isset($_GET['remove'])) {
-    $id = (int)$_GET['remove'];
-    $product = Product::findById($id);
-    if ($product !== null) {
-        $cart->remove($product);
-    }
- 
-    // Redirect back to cart.php
+if (isset($_GET['remove'])) {
+    $id = (int) $_GET['remove'];
+    $cart->remove($id);
+
     header('Location: cart.php');
     exit;
 }
@@ -51,7 +48,12 @@ if(isset($_GET['remove'])) {
 // 2. Redirect back to cart.php
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
+if (isset($_GET['clear'])) {
+    $cart->clear();
 
+    header('Location: cart.php');
+    exit;
+}
 // =============================================================================
 
 // =============================================================================
@@ -62,7 +64,19 @@ if(isset($_GET['remove'])) {
 // 3. Redirect back to cart.php
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
+if (isset($_GET['update']) && isset($_GET['qty'])) {
+    $id  = (int) $_GET['update'];
+    $qty = (int) $_GET['qty'];
 
+    if ($qty <= 0) {
+        $cart->remove($id);
+    } else {
+        $cart->update($id, $qty);
+    }
+
+    header('Location: cart.php');
+    exit;
+}
 // =============================================================================
 
 // Retrieve the cart count and total
