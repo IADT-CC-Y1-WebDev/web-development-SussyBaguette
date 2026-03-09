@@ -1,30 +1,71 @@
 <?php
-
-class Book {
+// =============================================================================
+// Exercise 8-10: Book Active Record Class
+//
+// TODO: Implement this class following the Active Record pattern.
+//
+// The class should represent the 'books' table with these columns:
+// - id (INT, auto-increment primary key)
+// - title (VARCHAR)
+// - author (VARCHAR)
+// - publisher_id (INT, foreign key to publishers table)
+// - year (INT)
+// - isbn (VARCHAR)
+// - description (TEXT)
+// - cover_filename (VARCHAR)
+//
+// Required methods:
+// - __construct($data = []) - Hydrate object from data array
+// - findAll() - Static method returning all books
+// - findById($id) - Static method returning single book or null
+// - findByPublisher($publisherId) - Static method returning books by publisher
+// - save() - Instance method to INSERT or UPDATE
+// - delete() - Instance method to DELETE
+// - toArray() - Instance method to convert to array
+// =============================================================================
+class Book
+{
+    // public properties for each database column
     public $id;
     public $title;
-    public $release_date;
+    public $author;
     public $publisher_id;
+    public $year;
+    public $isbn;
     public $description;
-    public $image_filename;
+    public $cover_filename;
 
+    // private $db property for database connection
     private $db;
 
-    public function __construct($data = []) {
+    // =========================================================================
+    // Exercise 8: Book Class Basics
+    // =========================================================================
+    public function __construct($data = [])
+    {
+        // TODO: Get database connection from DB singleton
+        // TODO: If $data is not empty, populate properties using null coalescing operator
         $this->db = DB::getInstance()->getConnection();
-
+        
         if (!empty($data)) {
             $this->id = $data['id'] ?? null;
             $this->title = $data['title'] ?? null;
-            $this->release_date = $data['release_date'] ?? null;
+            $this->author = $data['author'] ?? null;
             $this->publisher_id = $data['publisher_id'] ?? null;
+            $this->year = $data['year'] ?? null;
+            $this->isbn = $data['isbn'] ?? null;
             $this->description = $data['description'] ?? null;
-            $this->image_filename = $data['image_filename'] ?? null;
+            $this->cover_filename = $data['cover_filename'] ?? null;
+
+
         }
     }
 
-    // Find all books
-    public static function findAll() {
+    // =========================================================================
+    // Exercise 9: Finder Methods
+    // =========================================================================
+    public static function findAll()
+    {
         $db = DB::getInstance()->getConnection();
         $stmt = $db->prepare("SELECT * FROM books ORDER BY title");
         $stmt->execute();
@@ -37,92 +78,93 @@ class Book {
         return $books;
     }
 
-    // Find book by ID
-    public static function findById($id) {
+    // =========================================================================
+    // Exercise 9: Finder Methods
+    // =========================================================================
+    public static function findById($id)
+    {
+        // TODO: Implement this method
+
         $db = DB::getInstance()->getConnection();
         $stmt = $db->prepare("SELECT * FROM books WHERE id = :id");
-        $stmt->execute(['id' => $id]);
+        $stmt->execute(["id" => $id]);
 
-        $row = $stmt->fetch();
-        if ($row) {
-            return new Book($row);
+        $book = $stmt->fetch();
+        if ($book) {
+            return new Book($book);
         }
 
         return null;
     }
 
-    // Find books by publisher
-    public static function findByPublisher($publisherId) {
+    // =========================================================================
+    // Exercise 9: Finder Methods
+    // =========================================================================
+    public static function findByPublisher($publisherId)
+    {
         $db = DB::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM books WHERE publisher_id = :publisher_id ORDER BY title");
-        $stmt->execute(['publisher_id' => $publisherId]);
+        $stmt = $db->prepare("SELECT * FROM books WHERE publisher_id = :publisher_id");
+        $stmt->execute(["publisher_id" => $publisherId]);
+
+        $rows = $stmt->fetchAll();
 
         $books = [];
-        while ($row = $stmt->fetch()) {
+
+        foreach ($rows as $row) {
             $books[] = new Book($row);
         }
 
         return $books;
     }
 
-    // Find books by format (requires JOIN with BookFormats table)
-    public static function findByFormat($formatId) {
-        $db = DB::getInstance()->getConnection();
-        $stmt = $db->prepare("
-            SELECT g.*
-            FROM books g
-            INNER JOIN book_format gp ON g.id = gp.book_id
-            WHERE gp.format_id = :format_id
-            ORDER BY g.title
-        ");
-        $stmt->execute(['format_id' => $formatId]);
 
-        $books = [];
-        while ($row = $stmt->fetch()) {
-            $books[] = new Book($row);
-        }
-
-        return $books;
-    }
-
-    // Save (insert or update)
-    public function save() {
+    // =========================================================================
+    // Exercise 10: Complete Active Record
+    // =========================================================================
+    public function save()
+    {
         if ($this->id) {
             // Update existing record
             $stmt = $this->db->prepare("
                 UPDATE books
                 SET title = :title,
-                    release_date = :release_date,
+                    author = :author,
                     publisher_id = :publisher_id,
+                    year = :year,
+                    isbn = :isbn,
                     description = :description,
-                    image_filename = :image_filename
+                    cover_filename = :cover_filename
                 WHERE id = :id
             ");
 
             $params = [
                 'title' => $this->title,
-                'release_date' => $this->release_date,
+                'author' => $this->author,
                 'publisher_id' => $this->publisher_id,
+                'year' => $this->year,
+                'isbn' => $this->isbn,
                 'description' => $this->description,
-                'image_filename' => $this->image_filename,
+                'cover_filename' => $this->cover_filename,
                 'id' => $this->id
             ];
-        } 
-        else {
+        } else {
             // Insert new record
             $stmt = $this->db->prepare("
-                INSERT INTO books (title, release_date, publisher_id, description, image_filename)
-                VALUES (:title, :release_date, :publisher_id, :description, :image_filename)
+                INSERT INTO books (title, author, publisher_id, year, isbn, description, cover_filename)
+                VALUES (:title, :author, :publisher_id, :year, :isbn, :description, :cover_filename)
             ");
 
             $params = [
                 'title' => $this->title,
-                'release_date' => $this->release_date,
+                'author' => $this->author,
                 'publisher_id' => $this->publisher_id,
+                'year' => $this->year,
+                'isbn' => $this->isbn,
                 'description' => $this->description,
-                'image_filename' => $this->image_filename
+                'cover_filename' => $this->cover_filename
             ];
         }
+
         // Execute statement
         $status = $stmt->execute($params);
 
@@ -130,11 +172,11 @@ class Book {
         if (!$status) {
             $error_info = $stmt->errorInfo();
             $message = sprintf(
-                "SQLSTATE error code: %d; error message: %s",
+                "SQLSTATE error code: %s; error message: %s",
                 $error_info[0],
                 $error_info[2]
             );
-            throw new Exception($message);  
+            throw new Exception($message);
         }
 
         // Ensure one row affected
@@ -148,8 +190,11 @@ class Book {
         }
     }
 
-    // Delete
-    public function delete() {
+    // =========================================================================
+    // Exercise 10: Complete Active Record
+    // =========================================================================
+    public function delete()
+    {
         if (!$this->id) {
             return false;
         }
@@ -158,15 +203,22 @@ class Book {
         return $stmt->execute(['id' => $this->id]);
     }
 
-    // Convert to array for JSON output
-    public function toArray() {
+    // =========================================================================
+    // Exercise 8: Book Class Basics
+    // =========================================================================
+    public function toArray()
+    {
+
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'release_date' => $this->release_date,
+            'author' => $this->author,
             'publisher_id' => $this->publisher_id,
+            'year' => $this->year,
+            'isbn' => $this->isbn,
             'description' => $this->description,
-            'image_filename' => $this->image_filename
+            'cover_filename' => $this->cover_filename
+
         ];
     }
 }

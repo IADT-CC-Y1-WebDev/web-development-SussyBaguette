@@ -3,9 +3,9 @@ require_once 'php/lib/config.php';
 require_once 'php/lib/session.php';
 require_once 'php/lib/forms.php';
 require_once 'php/lib/utils.php';
-
+ 
 startSession();
-
+ 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         throw new Exception('Invalid request method.');
@@ -14,19 +14,20 @@ try {
         throw new Exception('No book ID provided.');
     }
     $id = $_GET['id'];
-
+ 
     $book = Book::findById($id);
     if ($book === null) {
         throw new Exception("Book not found.");
     }
-
-    $bookFormats = Format::findByBook($book->id);
+ 
+    $bookFormats = Format::findByBookId($book->id);
     $bookFormatsIds = [];
     foreach ($bookFormats as $format) {
         $bookFormatsIds[] = $format->id;
     }
-
-    $publishers = Genre::findAll();
+ 
+    $publishers = Publisher::findAll();
+    
     $formats = Format::findAll();
 }
 catch (PDOException $e) {
@@ -61,23 +62,30 @@ catch (PDOException $e) {
                         </div>
                     </div>
                     <div class="input">
-                        <label class="special" for="release_date">Release Year:</label>
+                        <label class="special" for="year">Release Year:</label>
                         <div>
-                            <input type="date" id="release_date" name="release_date" value="<?= old('release_date', $book->release_date) ?>" required>
-                            <p><?= error('release_date') ?></p>
+                            <input type="number" id="year" name="year" value="<?= old('year', $book->year) ?>" required>
+                            <p><?= error('year') ?></p>
                         </div>
                     </div>
                     <div class="input">
-                        <label class="special" for="publisher_id">Genre:</label>
+                        <label class="special" for="publisher_id">Publisher:</label>
                         <div>
                             <select id="publisher_id" name="publisher_id" required>
                                 <?php foreach ($publishers as $publisher) { ?>
                                     <option value="<?= h($publisher->id) ?>" <?= chosen('publisher_id', $publisher->id, $book->publisher_id) ? "selected" : "" ?>>
-                                        <?= h($publisher->name) ?>
+                                        <?= h($publisher->Name) ?>
                                     </option>
                                 <?php } ?>
                             </select>
                             <p><?= error('publisher_id') ?></p>
+                        </div>
+                    </div>
+                      <div class="input">
+                        <label class="special" for="isbn">Isbn:</label>
+                        <div>
+                            <textarea id="isbn" name="isbn" required><?= old('isbn', $book->isbn) ?></textarea>
+                            <p><?= error('isbn') ?></p>
                         </div>
                     </div>
                     <div class="input">
@@ -92,9 +100,9 @@ catch (PDOException $e) {
                         <div>
                             <?php foreach ($formats as $format) { ?>
                                 <div>
-                                    <input type="checkbox" 
-                                        id="format_<?= h($format->id) ?>" 
-                                        name="format_ids[]" 
+                                    <input type="checkbox"
+                                        id="format_<?= h($format->id) ?>"
+                                        name="format_ids[]"
                                         value="<?= h($format->id) ?>"
                                         <?= chosen('format_ids', $format->id, $bookFormatsIds) ? "checked" : "" ?>
                                     >
@@ -104,12 +112,12 @@ catch (PDOException $e) {
                         </div>
                         <p><?= error('format_ids') ?></p>
                     </div>
-                    <div><img src="images/<?= $book->image_filename ?>" /></div>
+                    <div><img src="images/<?= $book->cover_filename ?>" /></div>
                     <div class="input">
-                        <label class="special" for="image">Image (optional):</label>
+                        <label class="special" for="cover">Image (optional):</label>
                         <div>
-                            <input type="file" id="image" name="image" accept="image/*">
-                            <p><?= error('image') ?></p>
+                            <input type="file" id="cover" name="cover" accept="image/*">
+                            <p><?= error('cover') ?></p>
                         </div>
                     </div>
                     <div class="input">

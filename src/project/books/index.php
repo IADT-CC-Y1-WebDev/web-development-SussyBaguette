@@ -4,8 +4,8 @@ require_once 'php/lib/utils.php';
 
 try {
     $books = Book::findAll();
-    $publishers = Publisher::findAll();
-    $formats = Format::findAll();
+    // $genres = Genre::findAll();
+    // $platforms = Platform::findAll();
 } 
 catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
@@ -58,6 +58,8 @@ catch (PDOException $e) {
                 </div>
             <?php } ?>
         </div>
+        </div>
+        
         <div class="container">
             <?php if (empty($books)) { ?>
                 <p>No books found.</p>
@@ -67,10 +69,10 @@ catch (PDOException $e) {
                         <div class="card">
                             <div class="top-content">
                                 <h2>Title: <?= h($book->title) ?></h2>
-                                <p>Release Year: <?= h($book->release_date) ?></p>
+                                <p>Year: <?= h($book->year) ?></p>
                             </div>
                             <div class="bottom-content">
-                                <img src="images/<?= h($book->image_filename) ?>" alt="Image for <?= h($book->title) ?>" />
+                                <img src="images/<?= h($book->cover_filename) ?>" alt="Image for <?= h($book->title) ?>" />
                                 <div class="actions">
                                     <a href="book_view.php?id=<?= h($book->id) ?>">View</a>/ 
                                     <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a>/ 

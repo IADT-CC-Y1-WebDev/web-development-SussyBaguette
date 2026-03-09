@@ -1,9 +1,9 @@
 <?php
-class Format
+class Publisher
 {
     // public properties for each database column
     public $id;
-    public $name;
+    public $Name;
  
     // private $db property for database connection
     private $db;
@@ -13,67 +13,50 @@ class Format
         $this->db = DB::getInstance()->getConnection();
  
         $this->id             = $data['id'] ?? null;
-        $this->name          = $data['name'] ?? null;
+        $this->Name          = $data['Name'] ?? null;
     }
  
     public static function findAll()
     {
         $db = DB::getInstance()->getConnection();
  
-        $stmt = $db->prepare("SELECT * FROM formats ORDER BY name");
+        $stmt = $db->prepare("SELECT * FROM publishers ORDER BY Name");
         $stmt->execute();
  
-        $formats = [];
+        $publishers = [];
         while ($row = $stmt->fetch()) {
-            $formats[] = new Format($row);
+            $publishers[] = new Publisher($row);
         }
  
-        return $formats;
+        return $publishers;
     }
-    
+ 
     public static function findById($id)
     {
-        // TODO: Implement this method
-
         $db = DB::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM formats WHERE id = :id");
-        $stmt->execute(["id" => $id]);
-
-        $format = $stmt->fetch();
-        if ($format) {
-            return new Format($format);
+        $stmt = $db->prepare("SELECT * FROM publishers WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+ 
+        $row = $stmt->fetch();
+        if ($row) {
+            return new Publisher($row);
         }
-
+ 
         return null;
     }
  
-    public static function findByBookId($bookId)
+    public static function findByPublisher($publisherId)
     {
         $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM publishers WHERE publisher_id = :publisher_id ORDER BY Name");
+        $stmt->execute(['publisher_id' => $publisherId]);
  
-        $stmt = $db->prepare("SELECT f.* FROM books b LEFT JOIN book_format bf ON bf.book_id = b.id LEFT JOIN formats f ON bf.format_id = f.id WHERE b.id = :bookId");
-        $stmt->execute(['bookId' => $bookId]);
- 
-        $formats = [];
+        $publishers = [];
         while ($row = $stmt->fetch()) {
-            $formats[] = new Format($row);
+            $publishers[] = new Publisher($row);
         }
  
-        return $formats;
-    }
- 
-    public static function findByFormat($formatId)
-    {
-        $db = DB::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM formats WHERE format_id = :format_id ORDER BY name");
-        $stmt->execute(['format_id' => $formatId]);
- 
-        $formats = [];
-        while ($row = $stmt->fetch()) {
-            $formats[] = new Format($row);
-        }
- 
-        return $formats;
+        return $publishers;
     }
  
     public function save()
@@ -81,23 +64,23 @@ class Format
         // TODO: Implement this method
         if ($this->id) {
             $stmt = $this->db->prepare("
-                UPDATE formats
-                SET name = :name
+                UPDATE publishers
+                SET Name = :Name
                 WHERE id = :id
             ");
  
             $params = [
-                'name'          => $this->name,
+                'Name'          => $this->Name,
                 'id'             => $this->id
             ];
         } else {
             $stmt = $this->db->prepare("
-                INSERT INTO formats (name)
-                VALUES (:name)
+                INSERT INTO publishers (Name)
+                VALUES (:Name)
             ");
  
             $params = [
-                'name'          => $this->name,
+                'Name'          => $this->Name,
             ];
         }
        
@@ -114,7 +97,7 @@ class Format
         }
  
         if ($stmt->rowCount() !== 1) {
-            throw new Exception("Failed to save format.");
+            throw new Exception("Failed to save publisher.");
         }
  
         if ($this->id === null) {
@@ -128,7 +111,7 @@ class Format
             return false;
         }
  
-        $stmt = $this->db->prepare("DELETE FROM formats WHERE id = :id");
+        $stmt = $this->db->prepare("DELETE FROM publishers WHERE id = :id");
         return $stmt->execute(['id' => $this->id]);
     }
  
@@ -136,7 +119,8 @@ class Format
     {
         return [
             'id'             => $this->id,
-            'name'          => $this->name,
+            'Name'          => $this->Name,
         ];
     }
 }
+ 

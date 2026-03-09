@@ -19,24 +19,28 @@ try {
 
     // Get form data
     $data = [
-        'id' => $_POST['id'] ?? null,
-        'title' => $_POST['title'] ?? null,
-        'release_date' => $_POST['release_date'] ?? null,
-        'publisher_id' => $_POST['publisher_id'] ?? null,
-        'description' => $_POST['description'] ?? null,
-        'format_ids' => $_POST['format_ids'] ?? [],
-        'image' => $_FILES['image'] ?? null
+        "title" => $_POST["title"] ?? null,
+        "author" => $_POST["author"] ?? null,
+        "publisher_id" => $_POST["publisher_id"] ?? null,
+        "year" => $_POST["year"] ?? null,
+        "isbn" => $_POST["isbn"] ?? null,
+        "format_ids" => $_POST["format_ids"] ?? [],
+        "description" => $_POST["description"] ?? null,
+        "cover" => $_FILES["cover"] ?? null,
+
     ];
 
     // Define validation rules
-    $rules = [
-        'id' => 'required|integer',
-        'title' => 'required|notempty|min:1|max:255',
-        'release_date' => 'required|notempty',
-        'publisher_id' => 'required|integer',
-        'description' => 'required|notempty|min:10|max:5000',
-        'format_ids' => 'required|array|min:1|max:10',
-        'image' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880' // optional -- no required rule
+      $rules = [
+        "title" => "required|noempty|min:5|max:255",
+        "author" => "required|noempty|min:5|max:255",
+        "publisher_id" => "required|noempty|integer",
+        "year" => "required|noempty|integer|minvalue:1900|maxvalue:" . $year,
+        "isbn" => "required|noempty|min:13|max:13",
+        "format_ids" => "required|noempty|array|min:1|max:4",
+        "description" => "required|noempty|min:10",
+        "cover" => "required|file|image|mimes:jpg,jpep,png|max_file_size:5242880",
+
     ];
 
     // Validate all data (including file)
@@ -51,31 +55,19 @@ try {
         throw new Exception('Validation failed.');
     }
 
-    // Find existing book
+    // Find existing game
     $book = Book::findById($data['id']);
     if (!$book) {
         throw new Exception('Book not found.');
     }
 
-    // Verify publisher exists
-    $publisher = Publisher::findById($data['publisher_id']);
-    if (!$publisher) {
-        throw new Exception('Selected publisher does not exist.');
-    }
-
-    // Verify formats exist
-    foreach ($data['format_ids'] as $formatId) {
-        if (!Format::findById($formatId)) {
-            throw new Exception('One or more selected formats do not exist.');
-        }
-    }
-
+  
     // Process the uploaded image (validation already completed)
     $imageFilename = null;
     $uploader = new ImageUpload();
     if ($uploader->hasFile('image')) {
         // Delete old image
-        $uploader->deleteImage($book->image_filename);
+        $uploader->deleteImage($book->cover_filename);
         // Process new image
         $imageFilename = $uploader->process($_FILES['image']);
         // Check for processing errors
@@ -84,27 +76,21 @@ try {
         }
     }
     
-    // Update the book instance
+    // Update the game instance
     $book->title = $data['title'];
-    $book->release_date = $data['release_date'];
+    $book->author = $data['author'];
     $book->publisher_id = $data['publisher_id'];
+    $book->year = $data['year'];
+    $book->isbn = $data['isbn'];
     $book->description = $data['description'];
     if ($imageFilename) {
-        $book->image_filename = $imageFilename;
+        $book->cover_filename = $cover_filename;
     }
 
     // Save to database
     $book->save();
 
-    // Delete existing format associations
-    BookFormat::deleteByBook($book->id);
-    // Create new format associations
-    if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
-        foreach ($data['format_ids'] as $formatId) {
-            BookFormat::create($book->id, $formatId);
-        }
-    }
-
+   
     // Clear any old form data
     clearFormData();
     // Clear any old errors
@@ -113,7 +99,7 @@ try {
     // Set success flash message
     setFlashMessage('success', 'Book updated successfully.');
 
-    // Redirect to book details page
+    // Redirect to game details page
     redirect('book_view.php?id=' . $book->id);
 }
 catch (Exception $e) {
