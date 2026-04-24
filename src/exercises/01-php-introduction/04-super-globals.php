@@ -27,14 +27,14 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        echo "<h2>Server Information</h2>";
-        echo "<ul>";
-        echo "<li><strong>PHP Self:</strong> " . htmlspecialchars($_SERVER['PHP_SELF']) . "</li>";
-        echo "<li><strong>Request Method:</strong> " . htmlspecialchars($_SERVER['REQUEST_METHOD']) . "</li>";
-        echo "<li><strong>HTTP Host:</strong> " . htmlspecialchars($_SERVER['HTTP_HOST']) . "</li>";
-        echo "<li><strong>User Agent:</strong> " . htmlspecialchars($_SERVER['HTTP_USER_AGENT']) . "</li>";
-        echo "</ul>";
+        $keys = ['PHP_SELF', 'REQUEST_METHOD', 'HTTP_HOST', 'HTTP_USER_AGENT'];
 
+        echo "<ul>";
+        foreach ($keys as $key) {
+            $value = isset($_SERVER[$key]) ? $_SERVER[$key] : 'N/A';
+            echo "<li><strong>$key:</strong> $value</li>";
+        }
+        echo "</ul>";
         ?>
     </div>
 
@@ -51,9 +51,8 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        if (isset($_GET['name']) && !empty(trim($_GET['name']))) {
-            $name = htmlspecialchars($_GET['name']); 
-            echo "Hello, $name!";
+        if (isset($_GET['name'])) {
+            echo "Hello, " . htmlspecialchars($_GET['name']) . "!";
         } else {
             echo "Hello, Guest!";
         }
@@ -74,31 +73,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-
-        $errors = [];
-
-        if (isset($_GET['product']) && !empty(trim($_GET['product']))) {
-            $product = htmlspecialchars($_GET['product']);
-        } else {
-            $errors[] = "Error: 'product' parameter is missing.";
-        }
-
-        if (isset($_GET['quantity']) && !empty(trim($_GET['quantity']))) {
+        if (isset($_GET['product']) && isset($_GET['quantity'])) {
+            $product  = htmlspecialchars($_GET['product']);
             $quantity = htmlspecialchars($_GET['quantity']);
+            echo "You ordered $quantity $product(s).";
+        } elseif (!isset($_GET['product'])) {
+            echo "Error: missing product parameter.";
         } else {
-            $errors[] = "Error: 'quantity' parameter is missing.";
+            echo "Error: missing quantity parameter.";
         }
-
-        if (empty($errors)) {
-            $plural = ($quantity != 1) ? 's' : '';
-            echo "You ordered $quantity $product$plural.";
-        } else {
-            foreach ($errors as $error) {
-                echo $error . "<br>";
-            }
-        }
-
-
         ?>
     </div>
 

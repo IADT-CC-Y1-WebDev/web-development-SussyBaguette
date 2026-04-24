@@ -4,8 +4,8 @@ require_once 'php/lib/utils.php';
 
 try {
     $books = Book::findAll();
-    // $genres = Genre::findAll();
-    // $platforms = Platform::findAll();
+    $publishers = Publisher::findAll();
+    $formats = Format::findAll();
 } 
 catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
@@ -24,10 +24,13 @@ catch (PDOException $e) {
                 <div class="button">
                     <a href="book_create.php">Add New Book</a>
                 </div>
+                <div class="button">
+                    <a href="publisher_index.php">Manage Publishers</a>
+                </div>
             </div>
-            <?php if (!empty($books)) { ?>
+             <?php if (!empty($books)) { ?>
                 <div class="width-12 filters">
-                    <form>
+                    <form id ="filters">
                         <div>
                             <label for="title_filter">Title:</label>
                             <input type="text" id="title_filter" name="title_filter">
@@ -51,6 +54,14 @@ catch (PDOException $e) {
                             </select>
                         </div>
                         <div>
+                            <label class="filter-label" for="sort_by">Sort:</label>
+                            <select id="sort_by" name="sort_by">
+                                <option value="title_asc">Title A-Z</option>
+                                <option value="year_desc">Year (newest first)</option>
+                                <option value="year_asc">Year (oldest first)</option>
+                            </select>
+                        </div>
+                        <div>
                             <button type="button" id="apply_filters">Apply Filters</button>
                             <button type="button" id="clear_filters">Clear Filters</button>
                         </div>
@@ -59,24 +70,36 @@ catch (PDOException $e) {
             <?php } ?>
         </div>
         </div>
+        </div>
         
         <div class="container">
             <?php if (empty($books)) { ?>
                 <p>No books found.</p>
             <?php } else { ?>
-                <div class="width-12 cards">
-                    <?php foreach ($books as $book) { ?>
-                        <div class="card">
+                <div class="width-12 cards" id="book_cards">
+                    <?php foreach ($books as $book) {
+                        $bookFormats = Format::findByBookId($book->id);
+                        $formatIds = [];
+                        foreach ($bookFormats as $f) {
+                            $formatIds[] = $f->id;
+                        }
+                        $formatIdStr = implode(" ", $formatIds);
+                    ?>
+                        <div class="card"
+                            data-title="<?= h($book->title) ?>"
+                            data-publisher="<?= h($book->publisher_id) ?>"
+                            data-format="<?= h($formatIdStr) ?>"
+                            data-year="<?= h($book->year) ?>">
                             <div class="top-content">
-                                <h2>Title: <?= h($book->title) ?></h2>
-                                <p>Year: <?= h($book->year) ?></p>
+                                <h2><?= h($book->title) ?></h2>
+                                <p>Release Year: <?= h($book->year) ?></p>
                             </div>
                             <div class="bottom-content">
                                 <img src="images/<?= h($book->cover_filename) ?>" alt="Image for <?= h($book->title) ?>" />
                                 <div class="actions">
-                                    <a href="book_view.php?id=<?= h($book->id) ?>">View</a>/ 
-                                    <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a>/ 
-                                    <a href="book_delete.php?id=<?= h($book->id) ?>">Delete</a>
+                                    <a href="book_view.php?id=<?= h($book->id) ?>">View</a>/
+                                    <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a>/
+                                    <a href="book_delete.php?id=<?= h($book->id) ?>" onclick="return confirmDelete(event)">Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -84,5 +107,8 @@ catch (PDOException $e) {
                 </div>
             <?php } ?>
         </div>
+
+        <script src="Javascript/Filters.js"></script>
+        <script src="Javascript/confirm-delete.js"></script>
     </body>
 </html>

@@ -41,12 +41,12 @@ require_once __DIR__ . '/lib/config.php';
             // Test 2: Create Book from data
             $data = [
                 'id' => 99,
-                'title' => 'Test Book',
-                'author' => 'Test Author',
+                'title' => 'Harry Potter and the Philosophers Stone',
+                'author' => 'J.K. Rowling',
                 'publisher_id' => 1,
                 'year' => 2024,
                 'isbn' => '123-456-789',
-                'description' => 'A test book',
+                'description' => 'A magical story',
                 'cover_filename' => 'test.jpg'
             ];
             $book2 = new Book($data);
@@ -62,6 +62,15 @@ require_once __DIR__ . '/lib/config.php';
             } else {
                 echo "<pre>" . print_r($array, true) . "</pre>";
             }
+
+            $db = DB::getInstance()->getConnection();
+
+            $stmt = $db->query("SELECT * FROM books WHERE id = 1");
+            $row = $stmt->fetch();
+
+            $book2 = new Book($data);
+
+            echo $book->title; 
             ?>
         </div>
     </div>

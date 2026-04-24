@@ -55,7 +55,7 @@ try {
         "isbn" => "required|noempty|min:13|max:13",
         "format_ids" => "required|noempty|array|min:1|max:4",
         "description" => "required|noempty|min:10",
-        "cover" => "required|file|image|mimes:jpg,jpep,png|max_file_size:5242880",
+        "cover" => "required|file|image|mimes:jpg,jpeg,png|max_file_size:5242880",
 
     ];
     $validator = new Validator($data, $rules);

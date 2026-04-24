@@ -1,13 +1,14 @@
-import Animal from "./Animal.js";
+import Canine from "./Canine.js";
 
-class Dog extends Animal{
+
+class Dog extends Canine {
 
     constructor(_name, _age){
         super(_name, _age);
     }
 
     makeNoise(){
-        console.log("Barking: bark! bark! bark!");
+        console.log("WoooFFF >:3");
     }
 }
 

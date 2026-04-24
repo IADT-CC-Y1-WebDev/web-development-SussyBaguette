@@ -27,8 +27,7 @@ try {
     }
  
     $publishers = Publisher::findAll();
-    
-    $formats = Format::findAll();
+    $formats    = Format::findAll();
 }
 catch (PDOException $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
@@ -42,7 +41,9 @@ catch (PDOException $e) {
         <title>Edit Book</title>
     </head>
     <body>
+<section class="bookCreate">
         <div class="container">
+            <div class="bookPart">
             <div class="width-12">
                 <?php require 'php/inc/flash_message.php'; ?>
             </div>
@@ -50,51 +51,79 @@ catch (PDOException $e) {
                 <h1>Edit Book</h1>
             </div>
             <div class="width-12">
-                <form action="book_update.php" method="POST" enctype="multipart/form-data">
+                <form id="book_form" action="book_update.php" method="POST" enctype="multipart/form-data" novalidate>
+
+                    <div id="error_summary_top" class="error-summary" style="display:none" role="alert"></div>
+
                     <div class="input">
                         <input type="hidden" name="id" value="<?= h($book->id) ?>">
                     </div>
+
                     <div class="input">
                         <label class="special" for="title">Title:</label>
                         <div>
-                            <input type="text" id="title" name="title" value="<?= old('title', $book->title) ?>" required>
+                            <input type="text" id="title" name="title"
+                                   value="<?= old('title', $book->title) ?>" required>
                             <p><?= error('title') ?></p>
+                            <span id="title_error" class="error"></span>
                         </div>
                     </div>
+
                     <div class="input">
-                        <label class="special" for="year">Release Year:</label>
+                        <label class="special" for="author">Author:</label>
                         <div>
-                            <input type="number" id="year" name="year" value="<?= old('year', $book->year) ?>" required>
-                            <p><?= error('year') ?></p>
+                            <input type="text" id="author" name="author"
+                                   value="<?= old('author', $book->author) ?>" required>
+                            <p><?= error('author') ?></p>
+                            <span id="author_error" class="error"></span>
                         </div>
                     </div>
+
                     <div class="input">
                         <label class="special" for="publisher_id">Publisher:</label>
                         <div>
                             <select id="publisher_id" name="publisher_id" required>
                                 <?php foreach ($publishers as $publisher) { ?>
-                                    <option value="<?= h($publisher->id) ?>" <?= chosen('publisher_id', $publisher->id, $book->publisher_id) ? "selected" : "" ?>>
-                                        <?= h($publisher->Name) ?>
+                                    <option value="<?= h($publisher->id) ?>"
+                                        <?= chosen('publisher_id', $publisher->id, $book->publisher_id) ? "selected" : "" ?>>
+                                        <?= h($publisher->name) ?>
                                     </option>
                                 <?php } ?>
                             </select>
                             <p><?= error('publisher_id') ?></p>
+                            <span id="publisher_error" class="error"></span>
                         </div>
                     </div>
-                      <div class="input">
-                        <label class="special" for="isbn">Isbn:</label>
+
+                    <div class="input">
+                        <label class="special" for="year">Release Year:</label>
                         <div>
-                            <textarea id="isbn" name="isbn" required><?= old('isbn', $book->isbn) ?></textarea>
-                            <p><?= error('isbn') ?></p>
+                            <input type="number" id="year" name="year"
+                                   value="<?= old('year', $book->year) ?>" required>
+                            <p><?= error('year') ?></p>
+                            <span id="year_error" class="error"></span>
                         </div>
                     </div>
+
+                    <div class="input">
+                        <label class="special" for="isbn">ISBN:</label>
+                        <div>
+                            <input type="text" id="isbn" name="isbn"
+                                   value="<?= old('isbn', $book->isbn) ?>" required>
+                            <p><?= error('isbn') ?></p>
+                            <span id="isbn_error" class="error"></span>
+                        </div>
+                    </div>
+
                     <div class="input">
                         <label class="special" for="description">Description:</label>
                         <div>
                             <textarea id="description" name="description" required><?= old('description', $book->description) ?></textarea>
                             <p><?= error('description') ?></p>
+                            <span id="description_error" class="error"></span>
                         </div>
                     </div>
+
                     <div class="input">
                         <label class="special">Formats:</label>
                         <div>
@@ -111,27 +140,37 @@ catch (PDOException $e) {
                             <?php } ?>
                         </div>
                         <p><?= error('format_ids') ?></p>
+                        <span id="format_error" class="error"></span>
                     </div>
-                    <div><img src="images/<?= $book->cover_filename ?>" /></div>
+
+                    <div class="cover-preview">
+                        <span class="cover-label">Current Cover:</span>
+                        <img src="images/<?= h($book->cover_filename) ?>" alt="Current cover" />
+                    </div>
+
                     <div class="input">
                         <label class="special" for="cover">Image (optional):</label>
                         <div>
                             <input type="file" id="cover" name="cover" accept="image/*">
                             <p><?= error('cover') ?></p>
+                            <span id="cover_error" class="error"></span>
                         </div>
                     </div>
+
                     <div class="input">
-                        <button class="button" type="submit">Update Book</button>
+                        <button id="submit_btn" class="button" type="submit">Update Book</button>
                         <div class="button"><a href="index.php">Cancel</a></div>
                     </div>
+
                 </form>
             </div>
         </div>
+        </div>
+</section>
+    <script src="Javascript/FormValidationEdit.js"></script>
     </body>
 </html>
 <?php
-// Clear form data after displaying
 clearFormData();
-// Clear errors after displaying
 clearFormErrors();
 ?>

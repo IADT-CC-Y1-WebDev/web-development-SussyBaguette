@@ -30,17 +30,15 @@
         // TODO: Write your solution here
         $totalPoints = 0;
 
-        function addPoints($points) {
+        function addPoints($value) {
             global $totalPoints;
-            $totalPoints += $points;
-            echo "Total points: $totalPoints <br>";
-        
-
-        $totalPoints += $points;
+            $totalPoints += $value;
+            echo "<p>Total points: $totalPoints</p>";
         }
-        addPoints(10);
-        addPoints(20);
+
+        addPoints(2);
         addPoints(5);
+        addPoints(23);
         ?>
     </div>
 
@@ -58,11 +56,9 @@
         <?php
         // TODO: Write your solution here
         function visitCounter() {
-            static $count = 0;
-
-            $count++;
-
-            echo "Visit count: $count <br>";
+            static $visits = 0;
+            $visits++;
+            echo "<p>This page has been visited $visits time(s).</p>";
         }
 
         visitCounter();
@@ -91,12 +87,11 @@
 
         function testScope() {
             $message = "Local";
-            echo "Inside function: $message <br>";
+            echo "<p>Inside function: $message</p>";
         }
 
         testScope();
-
-        echo "Outside function: $message <br>";
+        echo "<p>Outside function: $message</p>";
         ?>
     </div>
 

@@ -27,13 +27,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $fn = "Luke";
-        $ln = "Murphy";
-        $age = "19";
+        $firstName = "Luke";
+        $lastName = "Murphy";
+        $age = 20;
         $city = "Dublin";
-        echo "My name is $fn $ln, I am $age years old and I live in $city."
 
-
+        echo "My name is $firstName $lastName, I am $age years old and I live in $city.";
         ?>
     </div>
 
@@ -51,16 +50,23 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $p1 = 10;
-        $p2 = 20;
-        $p3 = 30;
+        $price1 = 2;
+        $price2 = 3;
+        $price3 = 4;
 
-        $q1 = 1;
-        $q2 = 2;
-        $q3 = 3;
+        $quantity1 = 3;
+        $quantity2 = 5;
+        $quantity3 = 6;
 
-        $finalPrice = ($p1*$q1)+($p2*$q2)+($p3*$q3);
-        echo $finalPrice;
+        $product1 = $price1 * $quantity1;
+        $product2 = $price2 * $quantity2;
+        $product3 = $price3 * $quantity3;
+
+        $totalCost = $product1 + $product2 + $product3;
+
+        $discount = $totalCost * 0.9;
+
+        echo "Final price: €$discount";
         ?>
     </div>
 
@@ -80,11 +86,10 @@
         $hasDiscount = false;
         $isPremiumMember = false;
 
-        echo "is Student?: " . ($isStudent ? "Yes" : "No") . "<br>";
-        echo "Deserves discount?: " . ($hasDiscount ? "Yes" : "No"). "<br>";
-        echo "is a premium member?: " . ($isPremiumMember ? "Yes" : "No");
+        echo "Are you a student? " . ($isStudent ? "Yes" : "No") . "<br>";
+        echo "Eligible for Discount? " . ($hasDiscount ? "Yes" : "No") . "<br>";
+        echo "Are you a Premium Member? " . ($isPremiumMember ? "Yes" : "No");
         ?>
-
     </div>
 
 </body>

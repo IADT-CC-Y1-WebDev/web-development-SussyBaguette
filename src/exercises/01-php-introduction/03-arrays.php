@@ -21,19 +21,25 @@
         Create an indexed array with 5 of your favorite movies. Use a for 
         loop to display each movie with its position (e.g., "Movie 1: 
         The Matrix").
-
-        
     </p>
 
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $movies = array("Saw1", "Saw2", "Saw3", "Saw4", "Saw5");
-
+        $movies = [
+            'Superman',
+            'The Bee Movie',
+            'Emoji movie',
+            'Ben O Conner Adult films',
+            'Shrek'
+        ];
+        echo "<ul>";
         for ($i = 0; $i < count($movies); $i++) {
-            echo "<li>Movie " . ($i + 1) . ": " . $movies[$i] . "</li>";
+            $movieNum = $i + 1;
+            echo "<li>Movie $movieNum: $movies[$i]</li>";
         }
+        echo "</ul>";
         ?>
     </div>
 
@@ -49,8 +55,18 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $student = array("name"=>"Luke Murphy", "studentId"=>"00255391", "course"=>"Creative Computing", "grade"=>"A+");
-            var_dump($student);
+        $student = [
+            "name"      => "Luke Murphy",
+            "studentId" => "N00255391",
+            "course"    => "Creative Computing",
+            "grade"     => "A",
+        ];
+
+        $information =
+            "My name is {$student['name']}, my student number is {$student['studentId']}.<br>" .
+            "I am studying {$student['course']} and my grade is {$student['grade']}.";
+
+        echo $information;
         ?>
     </div>
 
@@ -67,12 +83,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $world = array("ireland"=>"dublin", "germany"=>"berlin", "netherlands"=>"amsterdam", "united kingdom"=>"london", "hungary"=>"budapest");
+        $location = [
+            "Ireland"        => "Dublin",
+            "United Kingdom" => "London",
+            "Netherland"         => "Amsterdam",
+            "Germany"        => "Berlin",
+            "Russia"          => "Moscow"
+        ];
 
-            foreach ($world as $key => $value) {
-            echo "The capital of $key : is $value <br>";
-            }
-            
+        echo "<ul>";
+        foreach ($location as $country => $capital) {
+            echo "<li>The capital of $country is $capital.</li>";
+        }
+        echo "</ul>";
         ?>
     </div>
 
@@ -90,28 +113,27 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $products = [
-            "main" => [
-                "fish" => "20 euros",
-                "steak" => "16 euros",
-                "burger" => "15 euros",
+        $menu = [
+            'Starters' => [
+                "Garlic Bread"   => "€3.50",
+                "Soup of the Day" => "€4.00",
+                "Side Salad"     => "€3.75"
             ],
-            "starter" => [
-                "wings" => "9 euros",
-                "soup" => "4 euros",
-                "bread" => "2 euros",
-            ],
+            'Main Course' => [
+                "Cheeseburger and Chips" => "€12.00",
+                "Spaghetti Bolognese"    => "€11.50",
+                "Grilled Chicken"        => "€13.00"
+            ]
         ];
-        foreach ($products as $category => $items) {
-        echo "<h3>$category</h3>";
-        echo "<ul>";
-        foreach ($items as $item => $price) {
-            echo "<li>$item - $price</li>";
-        }
-        echo "</ul>";
-    }
-        
 
+        foreach ($menu as $section => $items) {
+            echo "<p><strong>" . ucfirst($section) . "</strong></p>";
+            echo "<ul>";
+            foreach ($items as $meal => $price) {
+                echo "<li>$meal ($price)</li>";
+            }
+            echo "</ul>";
+        }
         ?>
     </div>
 

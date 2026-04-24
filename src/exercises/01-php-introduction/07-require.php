@@ -12,6 +12,12 @@
         <a href="/examples/01-php-introduction/07-require.php">View Example &rarr;</a>
     </div>
 
+    <div class="">
+        <?php
+        require 'inc/navigation.php';
+        ?>
+    </div>
+
     <h1>Libraries Exercises</h1>
 
     <!-- Exercise 1 -->
@@ -22,6 +28,7 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require 'inc/navigation.php';
         ?>
     </div>
 
@@ -33,6 +40,11 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once 'lib/utilities.php';
+
+        echo "<p>" . truncate("Creative Computing is really cool", 20) . "</p>";
+        echo "<p>" . formatPrice(49.99) . "</p>";
+        echo "<p>" . getCurrentYear() . "</p>";
         ?>
     </div>
 
@@ -44,6 +56,20 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once 'lib/validators.php';
+        require_once 'lib/formatters.php';
+
+        $emailResult = isValidEmail("luke.murphy@ncirl.ie");
+        $phoneResult = formatPhoneNumber("0831234567");
+
+        echo "<p>$emailResult</p>";
+        echo "<p>$phoneResult</p>";
+        ?>
+    </div>
+
+    <div class="">
+        <?php
+        require 'inc/navigation.php';
         ?>
     </div>
 

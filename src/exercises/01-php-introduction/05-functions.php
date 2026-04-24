@@ -26,17 +26,14 @@
         <?php
         // TODO: Write your solution here
         function celsiusToFahrenheit($celsius) {
-            return($celsius * 9 / 5) + 32;
+            return ($celsius * 9 / 5) + 32;
         }
-            
-        
-        $testValues = [0, 10, 20, 30, 100];
 
-        foreach ($testValues as $celsius) {
-            $fahrenheit = celsiusToFahrenheit($celsius);
-            echo $celsius . "C = " . $fahrenheit . "F<br>";
+        $testValues = [10, 25, 45];
+        foreach ($testValues as $c) {
+            $f = celsiusToFahrenheit($c);
+            echo "<p>{$c}°C is equivalent to {$f}°F</p>";
         }
-            
         ?>
     </div>
 
@@ -54,14 +51,15 @@
         <?php
         // TODO: Write your solution here
         function calculateRectangleArea($width, $height = null) {
-        if ($height === null) {
-          
-            $height = $width;
+            if ($height === null) {
+                $height = $width;
+            }
+            return $width * $height;
         }
-        return $width * $height;
-        }
-        
-        echo calculateRectangleArea(6, 10);
+
+        echo "<p>Area of 2x3 rectangle: " . calculateRectangleArea(2, 3) . "</p>";
+        echo "<p>Area of 10x7 rectangle: " . calculateRectangleArea(10, 7) . "</p>";
+        echo "<p>Area of 2x2 square: " . calculateRectangleArea(2) . "</p>";
         ?>
     </div>
 
@@ -78,12 +76,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-           function checkEvenOdd($number) {
-            return ($number % 2 === 0) ? "Even" : "Odd";
+        function checkEvenOdd($num) {
+            return ($num % 2 === 0) ? "Even" : "Odd";
         }
 
-        $number = rand(1, 2);
-        echo checkEvenOdd($number);
+        echo "<p>2 is " . checkEvenOdd(2) . "</p>";
+        echo "<p>5 is " . checkEvenOdd(5) . "</p>";
         ?>
     </div>
 
@@ -100,23 +98,18 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        function getArrayStats(array $numbers): array {
-            $min = min($numbers);
-            $max = max($numbers);
-            $avg = array_sum($numbers) / count($numbers);
-
-            return [$min, $max, $avg];
+        function getArrayStats($numbers) {
+            $min     = min($numbers);
+            $max     = max($numbers);
+            $average = array_sum($numbers) / count($numbers);
+            return [$min, $max, $average];
         }
 
-       
-        $numbers = [10, 5, 8, 14, 3];
+        [$min, $max, $average] = getArrayStats([1, 2, 3, 8, 15]);
 
-        
-        [$min, $max, $average] = getArrayStats($numbers);
-
-        echo "Minimum: $min\n";
-        echo "Maximum: $max\n";
-        echo "Average: $average\n";
+        echo "<p>Minimum: $min</p>";
+        echo "<p>Maximum: $max</p>";
+        echo "<p>Average: $average</p>";
         ?>
     </div>
 

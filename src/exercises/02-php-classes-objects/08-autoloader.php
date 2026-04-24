@@ -38,16 +38,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // spl_autoload_register(function ($class) {
-        //     $path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-        //     $file = __DIR__ . '/classes/' . $path . '.php';
-        //     if (file_exists($file)) {
-        //         require_once $file;
-        //     }
-        // });
-        // use College\Student;
-        // $student = new Student("Alice", "C12345");
-        // echo $student;
+        spl_autoload_register(function ($class) {
+            $path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+            $file = __DIR__ . '/classes/' . $path . '.php';
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
+        use College\Student;
+        $student = new Student("David Eze", "C98731");
+        echo $student;
         ?>
     </div>
 
@@ -65,10 +65,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/etc/config.php';
+        require_once __DIR__ . '/etc/config.php';
         // use College\Student;
-        // use College\Undergrad;
-        // use College\Postgrad;
+        use College\Undergrad;
+        use College\Postgrad;
+
+        $student = new Student ("Ben Conner", "91045", "Designer", "Third Year");
+        $undergrad = new Undergrad("Ryan Whealan", "67823", "Computing", "First Year");
+        $postgrad = new Postgrad("Luke Murphy", "36719", "Cathrine", "Computing");
+
+        echo "<strong>All Users:</strong><br>";
+        foreach (Student::findAll() as $users) {
+            echo $users . "<br>";
+        }
         ?>
     </div>
 
@@ -93,6 +102,23 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once __DIR__ . '/etc/config.php';
+        // use College\Student;
+        // use College\Undergrad;
+        // use College\Postgrad;
+
+        $student = new Student ("Ben Conner", "91045", "Designer", "Third Year");
+        $undergrad = new Undergrad("Ryan Whealan", "67823", "Computing", "First Year");
+        $postgrad = new Postgrad("Luke Murphy", "36719", "Cathrine", "Computing");
+
+        echo "<strong>All Users:</strong><br>";
+        foreach (Student::findAll() as $users) {
+            echo $users . "<br>";
+        }
+
+        echo "<br><strong>Looking for account 09876:</strong></br>";
+        $found = Student::findByNumber("67823");
+        echo $found;
         ?>
     </div>
 

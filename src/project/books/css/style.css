@@ -3,7 +3,7 @@ body {
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 1.5em;
-	background-color: #fff;
+	background-image: url(../images/13984559-bookshelf_m.jpg);
 }
 
 .cards {
@@ -13,23 +13,25 @@ body {
 }
 
 .card {
-	background-color: #f4f4f4;
+	background-color: rgb(219, 163, 118);
 	padding: 16px;
 	border-radius: 7px;
-	border: 1px solid #bcbcbc;
+	border: 1px solid #633a19;
 	width: 285px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
-
+.card.hidden {
+    display: none;
+}
 .card h2 {
 	font-size: 28px;
 	line-height: 32px;
 	font-family: "IBM Plex Serif";
 	margin-bottom: 12px;
 	font-weight: 300;
-	color: #016040;
+	color: #492f11;
 }
 
 .card p {
@@ -44,25 +46,26 @@ body {
 
 .card .actions a {
 	font-weight: 600;
-	color: #b0acfa;
+	color: #dd731c;
 	font-size: 13px;
 	text-transform: uppercase;
 }
 
 .card .actions a:hover {
-	color: #2c22df;
+	color: #d13e1a;
 }
 
 .card img {
 	width: 100%;
 	margin-bottom: 10px;
 	object-fit: cover;
-	border: 1px solid #7c75f1;
+	border: 1px solid #dd731c;
 	height: 340px;
 }
 
 .filters {
-	background-color: #f2f2f2;
+	background-color: rgb(219, 163, 118);
+	border: 1px solid #633a19;
 	padding: 10px;
 	display: flex;
 	justify-content: flex-end;
@@ -93,10 +96,10 @@ body {
 
 .filters form button {
 	font-size: 13px;
-	background-color: #084108;
+	background-color: #a17727;
 	padding: 5px 10px;
 	color: #ececec;
-	border: 1px solid #4bff3c;
+	border: 1px solid #dd731c;
 	border-radius: 5px;
 }
 
@@ -108,23 +111,23 @@ body {
 
 .button {
 	font-size: 13px;
-	background-color: #123991;
+	background-color: #a17727;
 	padding: 5px 10px;
 	color: #ececec;
-	border: 1px solid #4bff3c;
+	border: 1px solid #dd731c;
 	border-radius: 5px;
 }
 
 .hCard {
-	background-color: #f4f4f4;
+	background-color: rgb(219, 163, 118);
 	padding: 16px;
 	border-radius: 7px;
-	border: 1px solid #bcbcbc;
-	width: 800px;
+	border: 1px solid #633a19;
+	width: 750px;
 	display: flex;
-	gap: 20px;
+	gap: 40px;
 	flex-direction: row;
-	justify-content: space-between;
+	
 }
 
 .hCard h2 {
@@ -133,7 +136,7 @@ body {
 	font-family: "IBM Plex Serif";
 	margin-bottom: 12px;
 	font-weight: 300;
-	color: #016040;
+	color: #492f11;
 }
 
 .hCard p {
@@ -148,28 +151,27 @@ body {
 
 .hCard .actions a {
 	font-weight: 600;
-	color: #b0acfa;
+	color: #dd731c;
 	font-size: 13px;
 	text-transform: uppercase;
 }
 
 .hCard .actions a:hover {
-	color: #2c22df;
+	color: #d13e1a;
 }
 
 .hCard img {
-	width: 340px;
+	max-width: 400px;
 	margin-bottom: 10px;
-	object-fit: cover;
-	border: 1px solid #7c75f1;
-	height: 340px;
+	object-fit: contain;
+	border: 1px solid #dd731c;
+	height: 400px;
 }
 
 form {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	/* align-items: center; */
 }
 
 .input {
@@ -189,4 +191,156 @@ form {
 	justify-content: flex-end;
 	color: #252525;
 	font-weight: 900;
+}
+
+.form-group label{
+	width: 108px;
+	display: flex;
+	justify-content: flex-end;
+	color: #252525;
+	font-weight: 900;
+}
+
+
+
+/* create and edit */
+.bookCreate .bookPart{
+	background-color: rgb(219, 163, 118);
+	border: 1px solid #633a19;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.bookCreate form {
+	padding: 20px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 520px;
+}
+
+.bookCreate .input {
+    display: flex;
+    gap: 20px;
+}
+
+.bookCreate .input label.form-label {
+    width: 108px;
+    display: flex;
+    justify-content: flex-end;
+    color: #252525;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.bookCreate .form-group {
+    display: flex;
+    gap: 20px;
+}
+
+.bookCreate label {
+    font-weight: 600;
+}
+
+.bookCreate input,
+.bookCreate select,
+.bookCreate textarea {
+    font-size: 16px;
+    padding: 6px 8px;
+}
+
+.bookCreate textarea {
+    min-height: 80px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.bookCreate .input .platform-options label {
+    font-weight: normal;
+    margin-left: 4px;
+}
+
+.bookCreate .error {
+    color: #b00020;
+    font-size: 14px;
+}
+
+.bookCreate .input-error {
+    border-color: #b00020;
+    background: #fff5f5;
+}
+
+.bookCreate .error-summary {
+    border-radius: 6px;
+    border: 1px solid #b00020;
+    background: #fff5f5;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.bookCreate #submit_btn {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #a17727;
+	border: 1px solid #dd731c;
+    color: #fff;
+}
+
+
+.bookCreate .cover-preview {
+    display: flex;
+    gap: 20px;
+}
+ 
+.bookCreate .cover-preview .cover-label {
+    width: 110px;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: 900;
+    color: #252525;
+}
+ 
+.bookCreate .cover-preview img {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid #dd731c;
+    border-radius: 4px;
+}/* Publisher table */
+.publisher-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgb(219, 163, 118);
+    border: 1px solid #633a19;
+    border-radius: 7px;
+}
+
+.publisher-table th,
+.publisher-table td {
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid #c99060;
+}
+
+.publisher-table th {
+    font-weight: 700;
+    color: #492f11;
+    font-family: "IBM Plex Serif";
+}
+
+.publisher-table td.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.publisher-table td.actions a {
+    font-weight: 600;
+    color: #dd731c;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.publisher-table td.actions a:hover {
+    color: #d13e1a;
 }

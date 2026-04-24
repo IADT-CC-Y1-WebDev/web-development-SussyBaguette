@@ -7,8 +7,8 @@
 // =============================================================================
 
 // TODO Exercise 1: Start the session
-if (session_status() --- PHP_SESSION_NONE){
-    SESSION_START;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 // Available users (this is provided for you)
@@ -21,18 +21,21 @@ $users = ['alice', 'bob', 'charlie', 'dana'];
 // 3. If valid, set $_SESSION['logged_in_user'] to the username
 // 4. If $_GET['remember'] is also set, save a cookie 'remembered_user' (30 days)
 // 5. Redirect back to this page
-if (isset($_GET['login'])){
-    $username = $GET['login'];
-    if(in_array($username, $users)) {
-        $_SESSION['logged_in_user'] = $username;
-        if (isset($_GET['remember'])){
-            setcookie('remembered_user', $username, time() + 60 * 60 * 24 * 30, '/');
-        }
+if (isset($_GET['login'])) {
+    $username = $_GET['login'];
 
-        //redirect
-        header('Location; 04-remembe-me.php');
-        exit;
+    if (in_array($username, $users)) {
+        // Set session (logged in for this browser session)
+        $_SESSION['logged_in_user'] = $username;
+
+        // If "remember me" is also set, save to cookie
+        if (isset($_GET['remember'])) {
+            setcookie('remembered_user', $username, time() + (60 * 60 * 24 * 30), '/');
+        }
     }
+
+    header('Location: 04-remember-me.php');
+    exit;
 }
 
 // TODO Exercise 3: Handle "Logout" action
@@ -40,13 +43,16 @@ if (isset($_GET['login'])){
 // 1. Unset $_SESSION['logged_in_user']
 // 2. If $_GET['forget'] is also set, delete the 'remembered_user' cookie
 // 3. Redirect back to this page
-if (isset($_GET['logout'])){
-    unset ($_SESSION['logged_in_user']);
-    if (insset($_GET['forget'])){
-        setcookie('remembered_user', '', time() - 3600, '/')
+if (isset($_GET['logout'])) {
+    // Clear session
+    unset($_SESSION['logged_in_user']);
+
+    // Optionally clear the remember cookie too
+    if (isset($_GET['forget'])) {
+        setcookie('remembered_user', '', time() - 3600, '/');
     }
 
-    header('Location; 04-remembe-me.php');
+    header('Location: 04-remember-me.php');
     exit;
 }
 
@@ -54,13 +60,11 @@ if (isset($_GET['logout'])){
 // When $_GET['clear_cookie'] is set:
 // 1. Delete the 'remembered_user' cookie
 // 2. Redirect back to this page
-if (isset($_GET['clear_cookie'])){
-    setcookie('remembered_user', '', time() - 3600, '/')
-
-    header('Location; 04-remembe-me.php');
+if (isset($_GET['clear_cookie'])) {
+    setcookie('remembered_user', '', time() - 3600, '/');
+    header('Location: 04-remember-me.php');
     exit;
 }
-
 
 // Determine current state (this is provided for you)
 $isLoggedIn = isset($_SESSION['logged_in_user']);
@@ -217,9 +221,20 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
     <div class="output">
         <?php
         // TODO: After testing, write a comment explaining:
+        echo "<strong> 1. What is the session used for? </strong>" . 
+             "<br> > Session keeps track of which user is still logged in." . 
+             "<br><strong> 2. What is the cookie used for? </strong> " . 
+             "<br> > Remembers which user was recently logged in." . 
+             "<br><strong> 3. Why use both together? </strong>" . 
+             "<br> > Session focuses on who is currently logged on actiivly whilst cookie focuses on bringing back the users info who has left and returned.";
         // 1. What is the session used for?
+        // > Session keeps track of which user is still logged in.
+        
         // 2. What is the cookie used for?
+        // > Remembers which user was recently logged in.
+
         // 3. Why use both together?
+        // > Session focuses on who is currently logged on actiivly whilst cookie focuses on bringing back the users info who has left and returned.
         ?>
     </div>
 

@@ -28,26 +28,29 @@ require_once __DIR__ . '/lib/config.php';
         <h3>Test CREATE (new book):</h3>
         <div class="output">
             <?php
-            try {
-                $book = new Book();
-                $book->title = "Test Book " . time();
-                $book->author = "Test Author";
-                $book->publisher_id = 1;
-                $book->year = 2024;
-                $book->description = "Created via Active Record pattern";
+            $db = DB::getInstance()->getConnection();
+                $stmt = $db->prepare("SELECT id FROM books WHERE title = :title");
+                $stmt->execute(['title' => 'Active Record Book']);
+                $existing = $stmt->fetch();
 
-                $book->save();
+            if (!$existing) {
+                try {
+                    $book = new Book();
+                    $book->title = "Test Book " . time();
+                    $book->author = "Test Author";
+                    $book->publisher_id = 1;
+                    $book->year = 2024;
+                    $book->description = "Created via Active Record pattern";
 
-                if ($book->id) {
-                    echo "<p class='success'>Created book with ID: {$book->id}</p>";
-                } else {
-                    echo "<p class='warning'>save() didn't set the ID after INSERT</p>";
+                    $book->save();
+
+                echo "<p class='success'>Created game with ID: " . $book->id . "</p>";
+                    echo "<p>Title: " . htmlspecialchars($book->title) . "</p>";
+                } catch (Exception $e) {
+                    echo "<p class='error'>Error: " . $e->getMessage() . "</p>";
                 }
-
-                $createdId = $book->id;
-            } catch (Exception $e) {
-                echo "<p class='warning'>save() not implemented: " . $e->getMessage() . "</p>";
-                $createdId = null;
+            } else {
+                echo "<p class='info'>Demo game already exists with ID: " . $createdId['id'] . "</p>";
             }
             ?>
         </div>
@@ -55,8 +58,8 @@ require_once __DIR__ . '/lib/config.php';
         <h3>Test READ (verify creation):</h3>
         <div class="output">
             <?php
-            if ($createdId) {
-                $found = Book::findById($createdId);
+            if (!$existing) {
+                $found = Book::findById($book->id);
                 if ($found) {
                     echo "<p class='success'>Found created book: " . htmlspecialchars($found->title) . "</p>";
                 } else {
@@ -71,9 +74,9 @@ require_once __DIR__ . '/lib/config.php';
         <h3>Test UPDATE:</h3>
         <div class="output">
             <?php
-            if ($createdId) {
+            if (!$existing) {
                 try {
-                    $book = Book::findById($createdId);
+                    $book = Book::findById($book->id);
                     if ($book) {
                         $book->title = "Updated Title " . time();
                         $book->save();
@@ -91,16 +94,16 @@ require_once __DIR__ . '/lib/config.php';
         <h3>Test DELETE:</h3>
         <div class="output">
             <?php
-            if ($createdId) {
+            if (!$existing) {
                 try {
-                    $book = Book::findById($createdId);
+                    $book = Book::findById($book->id);
                     if ($book) {
                         $result = $book->delete();
                         if ($result) {
-                            echo "<p class='success'>Deleted book ID: {$createdId}</p>";
+                            echo "<p class='success'>Deleted book ID: {$book->id}</p>";
 
                             // Verify deletion
-                            $check = Book::findById($createdId);
+                            $check = Book::findById($book->id);
                             if ($check === null) {
                                 echo "<p class='success'>Verified: Book no longer exists</p>";
                             } else {

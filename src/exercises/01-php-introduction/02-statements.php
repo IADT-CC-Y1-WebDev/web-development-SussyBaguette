@@ -27,19 +27,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $age = rand(0, 100);
-        echo "You are $age years old". "<br>";
-        if ($age <= 12){
-            echo "You are age group: Child";
-        }
-        elseif ($age <= 19){
-            echo "You are age group: Teenager";
-        }
-        elseif ($age <= 64){
-            echo "You are age group: Adult";
-        }
-        else{
-            echo "You are age group: Senior";
+        $age = rand(0, 65);
+
+        if ($age <= 12) {
+            echo "You are in the Child age group";
+        } elseif ($age <= 19) {
+            echo "You are in the Teenager age group";
+        } elseif ($age <= 64) {
+            echo "You are in the Adult age group";
+        } else {
+            echo "You are in the Senior age group";
         }
         ?>
     </div>
@@ -58,39 +55,32 @@
         <?php
         // TODO: Write your solution here
         $day = rand(1, 7);
-        echo "It is day $day in the week". "<br>";
-        switch(true){
-            case($day <= 5):
-            echo "Its a weekday". "<br>";
-            break;
-            case($day <= 7):
-            echo "Its a weekend". "<br>";
-            break;
-        }
-       switch ($day) {
+
+        switch ($day) {
             case 1:
-            echo "Its Monday";
-            break;
+                echo "Today is a weekday, Monday";
+                break;
             case 2:
-            echo "Its Tuesday";
-            break;
+                echo "Today is a weekday, Tuesday";
+                break;
             case 3:
-            echo "Its Wednesday";
-            break;
+                echo "Today is a weekday, Wednesday";
+                break;
             case 4:
-            echo "Its Thursday";
-            break;
+                echo "Today is a weekday, Thursday";
+                break;
             case 5:
-            echo "Its Friday";
-            break;
+                echo "Today is a weekday, Friday";
+                break;
             case 6:
-            echo "Its Saturday";
-            break;
+                echo "Today is a weekend, Saturday";
+                break;
             case 7:
-            echo "Its Sunday";
-            break;
+                echo "Today is a weekend, Sunday";
+                break;
             default:
-            echo "Invalid day";
+                echo "Invalid day";
+                break;
         }
         ?>
     </div>
@@ -107,13 +97,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        $number = rand(1, 10);
-
+        $num = rand(1, 10);
+        echo "The multiples of $num:<br>";
         for ($i = 1; $i <= 10; $i++) {
-            $result = $number * $i;
-            echo "$number × $i = $result<br>";
+            $result = $num * $i;
+            echo "$num x $i = $result<br>";
         }
-
         ?>
     </div>
 
@@ -129,19 +118,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        
-        $count = 10;
-
-        while ($count >= 0) {
-            if ($count == 0) {
-                echo "Blast off!";
+        $num = 10;
+        while ($num >= 0) {
+            if ($num === 0) {
+                echo "Blast Off!<br>";
             } else {
-                echo $count . "<br>";
+                echo "$num<br>";
             }
-            $count--;
+            $num--;
         }
-
-
         ?>
     </div>
 

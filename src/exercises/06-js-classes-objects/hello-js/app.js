@@ -1,32 +1,29 @@
-console.log("Hello World");
-
-function timesTwo(inputNmber){
-    console.log(inputNumber * 2);
-}
-
-timesTwo(1);
+console.log("Hello World!!");
 
 let user = {
-    firstName: "John",
-    lastName: "Jones",
-    age: 32,
-    hobbies: ["Gym", "Movies"],
-    friends:[
+    firstName: "Luke",
+    lastName: "Murphy",
+    age: "19",
+    hobbies: ["Reading", "Sleeping"],
+    friends: [
         {
-        firstName: "Tim",
-        lastName: "Murphy",
-        age: 25, 
-        } 
-
+            firstName: "Ryan",
+            lastName: "Whealan",
+            age: "25",
+        },
         {
-        firstName: "Jake",
-        lastName: "Walsh",
-        age: 28, 
+            firstName: "Ben",
+            lastName: "Ben",
+            age: "12",
         }
-    ]
+    ],
 };
 
+console.log(user.friends[1].lastName);
 
+let donuts = ["Chocolate", "Jam", "Custard"];
 
-
-
+donuts.forEach((donut, i) => {
+    // console.log((i + 1) + " " + donut);
+    console.log(`Option ${i+1}: ${donut}`)
+});

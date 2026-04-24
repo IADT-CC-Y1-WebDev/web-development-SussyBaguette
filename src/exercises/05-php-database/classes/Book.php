@@ -45,6 +45,18 @@ class Book
     {
         // TODO: Get database connection from DB singleton
         // TODO: If $data is not empty, populate properties using null coalescing operator
+        $this->db = DB::getInstance()->getConnection();
+
+        if (!empty($data)) {
+            $this->id = $data['id'] ?? null;
+            $this->title = $data['title'] ?? null;
+            $this->author = $data['author'] ?? null;
+            $this->publisher_id = $data['publisher_id'] ?? null;
+            $this->year = $data['year'] ?? null;
+            $this->isbn = $data['isbn'] ?? null;
+            $this->description = $data['description'] ?? null;
+            $this->cover_filename = $data['cover_filename'] ?? null;
+        }
     }
 
     // =========================================================================
@@ -53,6 +65,16 @@ class Book
     public static function findAll()
     {
         // TODO: Implement this method
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM books ORDER BY title");
+        $stmt->execute();
+
+        $books = [];
+        while ($row = $stmt->fetch()) {
+            $books[] = new Book($row);
+        }
+
+        return $books;
     }
 
     // =========================================================================
@@ -61,14 +83,34 @@ class Book
     public static function findById($id)
     {
         // TODO: Implement this method
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM books WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+
+        $row = $stmt->fetch();
+        if ($row) {
+            return new Book($row);
+        }
+
+        return null;
     }
 
     // =========================================================================
     // Exercise 9: Finder Methods
     // =========================================================================
-    public static function findByPublisher($publisherId)
+    public static function findByPublisher($publisher_id)
     {
         // TODO: Implement this method
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM books WHERE publisher_id = :publisher_id ORDER BY title");
+        $stmt->execute(['publisher_id' => $publisher_id]);
+
+        $books = [];
+        while ($row = $stmt->fetch()) {
+            $books[] = new Book($row);
+        }
+
+        return $books;
     }
 
     // =========================================================================
@@ -77,6 +119,59 @@ class Book
     public function save()
     {
         // TODO: Implement this method
+        if ($this->id) {
+            // Update existing record
+            $stmt = $this->db->prepare("
+                UPDATE books
+                SET title = :title,
+                    author = :author,
+                    publisher_id = :publisher_id,
+                    year = :year,
+                    isbn = :isbn,
+                    description = :description,
+                    cover_filename = :cover_filename
+                WHERE id = :id
+            ");
+
+            $params = [
+                'title' => $this->title,
+                'author' => $this->author,
+                'publisher_id' => $this->publisher_id,
+                'year' => $this->year,
+                'isbn' => $this->isbn,
+                'description' => $this->description,
+                'cover_filename' => $this->cover_filename,
+                'id' => $this->id
+            ];
+        } else {
+            // Insert new record
+            $stmt = $this->db->prepare("
+                INSERT INTO books (title, author, publisher_id, year, isbn, description, cover_filename, id)
+                VALUES (:title, :author, :publisher_id, :year, :isbn, :description, :cover_filename, :id)
+            ");
+
+            $params = [
+                'title' => $this->title,
+                'author' => $this->author,
+                'publisher_id' => $this->publisher_id,
+                'year' => $this->year,
+                'isbn' => $this->isbn,
+                'description' => $this->description,
+                'cover_filename' => $this->cover_filename,
+                'id' => $this->id
+            ];
+        }
+
+        $status = $stmt->execute($params);
+
+        if (!$status || $stmt->rowCount() !== 1) {
+            throw new Exception("Failed to save book.");
+        }
+
+        // Set ID for new records
+        if ($this->id === null) {
+            $this->id = $this->db->lastInsertId();
+        }
     }
 
     // =========================================================================
@@ -85,6 +180,12 @@ class Book
     public function delete()
     {
         // TODO: Implement this method
+        if (!$this->id) {
+            return false;  // Can't delete unsaved game
+        }
+
+        $stmt = $this->db->prepare("DELETE FROM books WHERE id = :id");
+        return $stmt->execute(['id' => $this->id]);
     }
 
     // =========================================================================
@@ -93,5 +194,15 @@ class Book
     public function toArray()
     {
         // TODO: Implement this method
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'author' => $this->author,
+            'publisher_id' => $this->publisher_id,
+            'year' => $this->year,
+            'isbn' => $this->isbn,
+            'description' => $this->description,
+            'cover_filename' => $this->cover_filename
+        ];
     }
 }

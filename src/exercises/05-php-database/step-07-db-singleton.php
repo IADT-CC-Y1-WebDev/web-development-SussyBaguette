@@ -35,6 +35,33 @@ require_once __DIR__ . '/lib/config.php';
             // 3. Display the count
             // 4. Get DB::getInstance() twice and compare with ===
             // 5. Display whether they are the same instance
+
+            $db = DB::getInstance()->getConnection();
+
+            $stmt = $db->prepare("SELECT * FROM books WHERE id = :id");
+            $stmt->execute(['id' => 1]);
+            $book = $stmt->fetch();
+
+            if ($book) {
+                echo "<p class='warning'>Found book: " . htmlspecialchars($book['title']) . "</p>";
+            }
+
+            $instance1 = DB::getInstance();
+            $instance2 = DB::getInstance();
+
+            if ($instance1 === $instance2) {
+                echo "<p class='success'>Same instance! Singleton works correctly.</p>";
+            } else {
+                echo "<p class='error'>Different instances - singleton is broken!</p>";
+            }
+
+            $db1 = $instance1->getConnection();
+            $db2 = $instance2->getConnection();
+
+            if ($db1 === $db2) {
+                echo "<p class='success'>Same PDO connection object!</p>";
+            }
+
             ?>
         </div>
     </div>

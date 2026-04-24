@@ -54,7 +54,6 @@ require_once __DIR__ . '/lib/config.php';
                 echo "<p class='warning'>findById() not implemented or book not found</p>";
             } else {
                 echo "<p class='success'>Found book: " . htmlspecialchars($book->title ?? 'No title') . "</p>";
-                echo "<p>Author: " . htmlspecialchars($book->author ?? 'No author') . "</p>";
             }
             ?>
         </div>

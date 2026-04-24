@@ -37,7 +37,10 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+
+        $student = new Undergrad ("Luke", "67823", "Computing", "2026");
+        echo $student->getName();
         ?>
     </div>
 
@@ -58,7 +61,11 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+
+        $student = new Undergrad ("Luke Murphy", "67823", "Computing", "First Year");
+        echo "The Student, " . $student->getName() .", ID:" . $student->getNumber() . ", is in the " . $student->getYear() . " ". $student->getCourse() . " course.";
+
         ?>
     </div>
 
@@ -75,7 +82,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        
+
+        $student1 = new Undergrad ("Luke Murphy", "67823", "Computing", "First Year");
+        echo "The Student, " . $student1->getName() .", ID:" . $student1->getNumber() . ", is in the " . $student1->getYear() . " ". $student1->getCourse() . " course.<br>";
+        $student2 = new Undergrad ("Ben Conner", "91045", "Designer", "Third Year");
+        echo "The Student, " . $student2->getName() .", ID:" . $student2->getNumber() . ", is in the " . $student2->getYear() . " ". $student2->getCourse() . " course.<br>";
+        $student3 = new Undergrad ("Ryan Whealan", "48201", "Vet", "Second Year");
+        echo "The Student, " . $student3->getName() .", ID:" . $student3->getNumber() . ", is in the " . $student3->getYear() . " ". $student3->getCourse() . " course.<br>";
         ?>
     </div>
 

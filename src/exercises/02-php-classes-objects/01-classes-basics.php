@@ -35,6 +35,21 @@
         // Step 2: Require the file
         // require_once __DIR__ . '/classes/Student.php';
         // Step 3: Create a student and display their details
+
+        require_once __DIR__ . '/classes/Student.php';
+
+        //EXERCISE 1 
+        // $studentID = new Student();
+        // $studentID ->name = "Luke Murphy";
+        // $studentID ->number = "9823746510"; 
+        // echo "Name: " .$studentID ->name . "<br>";
+        // echo "ID Number: " .$studentID ->number;
+
+        $studentID = new Student("Luke Murphy", "9823746510");
+
+        echo "Name: " .$studentID ->getName() . "<br>";
+        echo "ID Number: " .$studentID ->getNumber();
+
         ?>
     </div>
 
@@ -55,6 +70,24 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+
+        //EXERCISE 2
+        // require_once __DIR__ . '/classes/Student.php';
+        // $studentID02 = new Student("Luke Murphy", "9823746510");
+        // $studentID02 = new Student("Ben Conner", "9823746510");
+        // echo "Name: " .$studentID01->name . "<br>";
+        // echo "ID Number: " .$studentID->number;
+        // echo "Name: " .$studentID02->name . "<br>";
+        // echo "ID Number: " .$studentID->number;
+
+        $studentID01 = new Student("Luke Murphy", "9823746510");
+        $studentID02 = new Student("Ben Conner", "6547832190");
+
+        echo "Name: " .$studentID01 ->getName() . "<br>";
+        echo "ID Number: " .$studentID01 ->getNumber() . "<br>";
+        echo "Name: " .$studentID02 ->getName() . "<br>";
+        echo "ID Number: " .$studentID02 ->getNumber();
+
         ?>
     </div>
 
@@ -75,6 +108,13 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+
+        require_once __DIR__ . '/classes/Student.php';
+
+        $studentID = new Student("Luke Murphy", "9823746510");
+
+        echo "Student " . $studentID->getName() . " has number " . $studentID->getNumber() . ".";
+ 
         ?>
     </div>
 

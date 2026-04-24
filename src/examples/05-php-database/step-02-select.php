@@ -104,7 +104,7 @@ $games = $stmt->fetchAll();
                         <td><?= htmlspecialchars(substr($game['description'], 0, 50)) ?>...</td>
                     </tr>
                     <?php endforeach; ?>
-                </tbody>
+                </tbody>    
             </table>
         </div>
 

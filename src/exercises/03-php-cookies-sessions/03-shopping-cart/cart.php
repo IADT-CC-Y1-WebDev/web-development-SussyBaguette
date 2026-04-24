@@ -14,6 +14,7 @@ require_once './etc/config.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 // =============================================================================
 
 // =============================================================================
@@ -33,12 +34,11 @@ $cart = ShoppingCart::getInstance();
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
 if (isset($_GET['remove'])) {
-    $id = (int) $_GET['remove'];
-    $cart->remove($id);
-
+    $cart->remove((int)$_GET['remove']);
     header('Location: cart.php');
     exit;
 }
+
 // =============================================================================
 
 // =============================================================================
@@ -50,10 +50,10 @@ if (isset($_GET['remove'])) {
 // TODO: Write your code here
 if (isset($_GET['clear'])) {
     $cart->clear();
-
     header('Location: cart.php');
     exit;
 }
+
 // =============================================================================
 
 // =============================================================================
@@ -65,18 +65,11 @@ if (isset($_GET['clear'])) {
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
 if (isset($_GET['update']) && isset($_GET['qty'])) {
-    $id  = (int) $_GET['update'];
-    $qty = (int) $_GET['qty'];
-
-    if ($qty <= 0) {
-        $cart->remove($id);
-    } else {
-        $cart->update($id, $qty);
-    }
-
+    $cart->updateQuantity((int)$_GET['update'], (int)$_GET['qty']);
     header('Location: cart.php');
     exit;
 }
+
 // =============================================================================
 
 // Retrieve the cart count and total
@@ -201,7 +194,9 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
                             // -------------------------------------------------
                             ?>
                             <span class="qty-links">
-                                <?= $item->quantity ?>
+                                <a href="?update=<?= $item->productId ?>&qty=<?= $item->quantity - 1 ?>">-</a>
+                                <strong><?= $item->quantity ?></strong>
+                                <a href="?update=<?= $item->productId ?>&qty=<?= $item->quantity + 1 ?>">+</a>
                             </span>
                             <?php
                             // =================================================
