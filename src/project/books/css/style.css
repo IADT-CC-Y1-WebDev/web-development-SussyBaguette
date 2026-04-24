@@ -106,7 +106,8 @@ body {
 .header {
 	display: flex;
 	align-items: baseline;
-	justify-content: space-between;
+	justify-content: right;
+	gap: 20px;
 }
 
 .button {
@@ -326,7 +327,6 @@ form {
 .publisher-table th {
     font-weight: 700;
     color: #492f11;
-    font-family: "IBM Plex Serif";
 }
 
 .publisher-table td.actions {
@@ -343,4 +343,9 @@ form {
 
 .publisher-table td.actions a:hover {
     color: #d13e1a;
+}
+
+.flash-message{
+	background-color: rgb(219, 163, 118);
+	padding:10px;
 }
